@@ -1,0 +1,5 @@
+{
+  "name": "VF5 Rent",
+  "description": "A website with a backend for renting VinFast VF5 electric cars.",
+  "requestFramePermissions": []
+}
