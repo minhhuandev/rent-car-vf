@@ -168,7 +168,7 @@ const formatDate = (val: any) => {
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
-  return \`\${year}-\${month}-\${day}\`;
+  return `${year}-${month}-${day}`;
 };
 
 async function startServer() {
@@ -212,7 +212,7 @@ async function startServer() {
       let imageUrl = req.body.imageUrl;
 
       if (req.file) {
-        imageUrl = \`/uploads/\${req.file.filename}\`;
+        imageUrl = `/uploads/${req.file.filename}`;
       }
 
       if (!imageUrl || !title) {
@@ -314,11 +314,11 @@ async function startServer() {
 
       const db = await getDb();
       
-      const overlapping = await db.query(\`
+      const overlapping = await db.query(`
         SELECT id FROM bookings 
         WHERE status != 'cancelled' 
         AND startDate <= ? AND endDate >= ?
-      \`, [endDate, startDate]);
+      `, [endDate, startDate]);
 
       if (overlapping.length > 0) {
         return res.status(400).json({ error: 'Khoảng thời gian này đã có người đặt. Vui lòng chọn ngày khác.' });
@@ -327,10 +327,10 @@ async function startServer() {
       const id = Math.random().toString(36).substring(2, 9);
       const createdAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
       
-      await db.execute(\`
+      await db.execute(`
         INSERT INTO bookings (id, name, email, phone, startDate, endDate, status, createdAt)
         VALUES (?, ?, ?, ?, ?, ?, 'pending', ?)
-      \`, [id, name, email, phone, startDate, endDate, createdAt]);
+      `, [id, name, email, phone, startDate, endDate, createdAt]);
 
       res.status(201).json({ id, name, email, phone, startDate, endDate, status: 'pending', createdAt });
     } catch (err) {
@@ -396,7 +396,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(\`Server running on http://localhost:\${PORT}\`);
+    console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
